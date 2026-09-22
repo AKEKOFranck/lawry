@@ -1,0 +1,249 @@
+:root {
+  /* =====================================================
+     PALETTE — BLANC / BORDEAUX
+  ===================================================== */
+
+  --bordeaux: #6b1220;
+  --bordeaux-dark: #46101b;
+  --bordeaux-light: #8a2638;
+  --red-soft: #f8eef0;
+
+  --white: #ffffff;
+  --cream: #fcfaf8;
+
+  --gray-50: #f7f7f7;
+  --gray-100: #eeeeee;
+  --gray-200: #dddddd;
+  --gray-500: #767676;
+  --gray-700: #3d3d3d;
+
+  --ink: #191919;
+
+  --gold: #b89a5b;
+
+  /* =====================================================
+     OMBRES
+  ===================================================== */
+
+  --shadow-sm: 0 4px 18px rgba(70, 16, 27, 0.06);
+  --shadow-md: 0 14px 40px rgba(70, 16, 27, 0.14);
+
+  /* =====================================================
+     ARRONDIS
+  ===================================================== */
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* =====================================================
+     TRANSITION
+  ===================================================== */
+
+  --transition: 160ms ease;
+
+  /* =====================================================
+     POLICES SYSTÈME
+     
+     Texte :
+     Segoe UI → Arial → Helvetica
+
+     Titres :
+     Georgia → Times New Roman
+  ===================================================== */
+
+  --font-sans:
+    "Segoe UI",
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  --font-serif:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   HTML
+===================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background: var(--cream);
+  color: var(--ink);
+
+  font-family: var(--font-sans);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
+/* =====================================================
+   TITRES
+===================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
+
+
+/* =====================================================
+   FORMULAIRES
+===================================================== */
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+button {
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   LIENS
+===================================================== */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =====================================================
+   SÉLECTION DE TEXTE
+===================================================== */
+
+::selection {
+  background: var(--bordeaux);
+  color: var(--white);
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-50);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bordeaux);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bordeaux-dark);
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+
+/* =====================================================
+   IMAGES
+===================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+input,
+textarea,
+select {
+  outline: none;
+}
+
+
+/* =====================================================
+   FOCUS ACCESSIBLE
+===================================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--bordeaux);
+  outline-offset: 3px;
+}
+
+
+/* =====================================================
+   RESPONSIVE CONTAINER
+===================================================== */
+
+@media (max-width: 768px) {
+  .container {
+    width: min(100% - 28px, 1180px);
+  }
+}
+
+
+/* =====================================================
+   PETITS ÉCRANS
+===================================================== */
+
+@media (max-width: 480px) {
+  .container {
+    width: calc(100% - 24px);
+  }
+}

@@ -1,0 +1,801 @@
+.page {
+  min-height: 100vh;
+
+  background: #f7f5f3;
+
+  color: #211e1e;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 50;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border-bottom: 1px solid rgba(107, 18, 32, 0.1);
+
+  backdrop-filter: blur(14px);
+}
+
+.headerInner {
+  width: min(1180px, calc(100% - 40px));
+
+  min-height: 68px;
+
+  margin: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+.logo {
+  width: 39px;
+
+  height: 39px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #6b1220;
+
+  color: white;
+
+  font-size: 18px;
+}
+
+.brandName {
+  margin: 0;
+
+  color: #4d101a;
+
+  font-family: Georgia, serif;
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+.brandSubtitle {
+  margin: 2px 0 0;
+
+  color: #918989;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+}
+
+.backLink {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #6b1220;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+  width: min(1000px, calc(100% - 32px));
+
+  margin: auto;
+
+  padding: 48px 0 65px;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+  margin-bottom: 28px;
+}
+
+.kicker {
+  color: #6b1220;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+.hero h1 {
+  margin: 9px 0 0;
+
+  color: #451019;
+
+  font-family: Georgia, serif;
+
+  font-size: clamp(31px, 4vw, 43px);
+
+  line-height: 1.1;
+
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  max-width: 650px;
+
+  margin: 12px 0 0;
+
+  color: #797171;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+  overflow: hidden;
+
+  border: 1px solid rgba(107, 18, 32, 0.1);
+
+  border-radius: 17px;
+
+  background: white;
+
+  box-shadow: 0 15px 45px rgba(40, 20, 20, 0.06);
+}
+
+.cardHeader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 22px 25px;
+
+  border-bottom: 1px solid #eee9e9;
+}
+
+.cardIcon {
+  width: 40px;
+
+  height: 40px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #f4e6e9;
+
+  color: #6b1220;
+}
+
+.cardHeader h2 {
+  margin: 0;
+
+  color: #481019;
+
+  font-family: Georgia, serif;
+
+  font-size: 20px;
+}
+
+.cardHeader p {
+  margin: 4px 0 0;
+
+  color: #898181;
+
+  font-size: 11px;
+}
+
+.cardBody {
+  padding: 26px;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form {
+  display: grid;
+
+  gap: 22px;
+}
+
+.sectionLabel {
+  color: #5a151f;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.02em;
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  color: #4d4747;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #ddd7d7;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  background: white;
+
+  color: #272323;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.field input,
+.field select {
+  height: 46px;
+
+  padding: 0 12px;
+}
+
+.field textarea {
+  min-height: 105px;
+
+  padding: 12px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #6b1220;
+
+  box-shadow:
+    0 0 0 3px rgba(107, 18, 32, 0.08);
+}
+
+
+/* =====================================================
+   RADIO
+===================================================== */
+
+.radioGroup {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px;
+}
+
+.radio,
+.radioActive {
+  min-height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1px solid #ddd7d7;
+
+  border-radius: 8px;
+
+  color: #676060;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s;
+}
+
+.radio input,
+.radioActive input {
+  display: none;
+}
+
+.radioActive {
+  border-color: #6b1220;
+
+  background: #f5e7ea;
+
+  color: #6b1220;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error {
+  padding: 11px 13px;
+
+  border: 1px solid #e3bfc6;
+
+  border-radius: 8px;
+
+  background: #fae9ec;
+
+  color: #791827;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.actions {
+  display: flex;
+
+  gap: 9px;
+
+  flex-wrap: wrap;
+}
+
+.button {
+  min-height: 46px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 16px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.primary {
+  flex: 1;
+
+  min-width: 210px;
+
+  border: 0;
+
+  background: #6b1220;
+
+  color: white;
+}
+
+.primary:hover {
+  background: #4d0d17;
+}
+
+.secondary {
+  border: 1px solid #ddd6d6;
+
+  background: white;
+
+  color: #5f5959;
+}
+
+.secondary:hover {
+  border-color: #6b1220;
+
+  color: #6b1220;
+}
+
+
+/* =====================================================
+   CLAUDE BOX
+===================================================== */
+
+.claudeBox {
+  overflow: hidden;
+
+  border: 1px solid #ded6d6;
+
+  border-radius: 12px;
+
+  background: #fbfaf9;
+}
+
+.claudeHeader {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 17px 18px;
+
+  border-bottom: 1px solid #e9e3e3;
+
+  color: #6b1220;
+}
+
+.claudeHeader > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.claudeBadge {
+  width: 30px;
+
+  height: 30px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 8px;
+
+  background: #6b1220;
+
+  color: white;
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+.claudeHeader h3 {
+  margin: 0;
+
+  color: #4b1119;
+
+  font-family: Georgia, serif;
+
+  font-size: 16px;
+}
+
+.claudeHeader p {
+  margin: 3px 0 0;
+
+  color: #8a8383;
+
+  font-size: 10px;
+}
+
+.claudeContent {
+  padding: 17px 18px;
+}
+
+.claudeContent p {
+  margin: 0;
+
+  color: #726b6b;
+
+  font-size: 11px;
+
+  line-height: 1.65;
+}
+
+.claudeContent strong {
+  color: #5a151f;
+}
+
+.claudeButton {
+  min-height: 43px;
+
+  margin-top: 14px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 15px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: #2b2929;
+
+  color: white;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.claudeButton:hover {
+  background: #171616;
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+.resetButton {
+  width: fit-content;
+
+  margin: 0 auto;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #888080;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  color: #6b1220;
+}
+
+
+/* =====================================================
+   WORKFLOW
+===================================================== */
+
+.workflow {
+  margin-top: 27px;
+
+  padding: 20px;
+
+  border: 1px solid #e3dddd;
+
+  border-radius: 13px;
+
+  background: white;
+}
+
+.workflowTitle {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #5d161f;
+
+  font-size: 11px;
+
+  font-weight: 800;
+}
+
+.workflowSteps {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+
+  margin-top: 16px;
+}
+
+.workflowSteps div {
+  padding: 12px;
+
+  border-radius: 8px;
+
+  background: #f7f4f3;
+}
+
+.workflowSteps strong {
+  display: block;
+
+  color: #6b1220;
+
+  font-family: Georgia, serif;
+
+  font-size: 16px;
+}
+
+.workflowSteps span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #7e7676;
+
+  font-size: 9px;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+  margin-top: 38px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #ddd7d7;
+
+  color: #928b8b;
+
+  font-size: 10px;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .main {
+    width: min(100% - 24px, 1000px);
+
+    padding-top: 35px;
+  }
+
+  .cardBody,
+  .cardHeader {
+    padding: 18px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    grid-column: auto;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primary {
+    width: 100%;
+  }
+
+  .secondary {
+    width: 100%;
+  }
+
+  .workflowSteps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 430px) {
+
+  .backLink {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 31px;
+  }
+
+  .workflowSteps {
+    grid-template-columns: 1fr;
+  }
+}

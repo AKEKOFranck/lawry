@@ -1,0 +1,547 @@
+.page {
+  min-height: 100vh;
+  background: #f7f5f3;
+  color: #1c1a1a;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(107, 18, 32, 0.1);
+
+  backdrop-filter: blur(14px);
+}
+
+.headerInner {
+  width: min(1100px, calc(100% - 40px));
+  min-height: 70px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: #6b1220;
+
+  color: white;
+
+  font-size: 19px;
+}
+
+.brand {
+  margin: 0;
+
+  color: #55101b;
+
+  font-family: Georgia, serif;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 2px 0 0;
+
+  color: #8b8585;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+  width: min(900px, calc(100% - 32px));
+
+  margin: auto;
+
+  padding: 55px 0 70px;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.intro {
+  max-width: 680px;
+
+  margin-bottom: 32px;
+}
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  background: #f1e4e7;
+
+  color: #6b1220;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+.intro h1 {
+  margin: 17px 0 0;
+
+  color: #3d1018;
+
+  font-family: Georgia, serif;
+
+  font-size: clamp(32px, 5vw, 48px);
+
+  line-height: 1.1;
+
+  letter-spacing: -0.035em;
+}
+
+.intro h1 span {
+  color: #8a2435;
+}
+
+.intro p {
+  max-width: 600px;
+
+  margin: 17px 0 0;
+
+  color: #777171;
+
+  font-size: 15px;
+
+  line-height: 1.75;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card {
+  overflow: hidden;
+
+  background: white;
+
+  border: 1px solid rgba(107, 18, 32, 0.1);
+
+  border-radius: 18px;
+
+  box-shadow: 0 16px 45px rgba(40, 20, 20, 0.07);
+}
+
+.cardTop {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  padding: 24px 26px;
+
+  border-bottom: 1px solid #eeeaea;
+}
+
+.cardTop h2 {
+  margin: 0;
+
+  color: #481019;
+
+  font-family: Georgia, serif;
+
+  font-size: 21px;
+}
+
+.cardTop p {
+  margin: 5px 0 0;
+
+  color: #8a8383;
+
+  font-size: 12px;
+}
+
+.cardIcon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: #f5e8eb;
+
+  color: #6b1220;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form {
+  display: grid;
+
+  gap: 25px;
+
+  padding: 27px;
+}
+
+.sectionTitle {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #5a151f;
+
+  font-size: 13px;
+
+  font-weight: 800;
+}
+
+.sectionTitle span {
+  width: 27px;
+  height: 27px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 8px;
+
+  background: #6b1220;
+
+  color: white;
+
+  font-size: 10px;
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 17px;
+
+  margin-top: -8px;
+}
+
+.field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #4c4747;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+
+  border: 1px solid #ded8d8;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: white;
+
+  color: #262323;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.field input,
+.field select {
+  height: 47px;
+
+  padding: 0 13px;
+}
+
+.field textarea {
+  min-height: 125px;
+
+  padding: 13px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.smallTextarea {
+  min-height: 90px !important;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #aaa3a3;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #6b1220;
+
+  box-shadow: 0 0 0 3px rgba(107, 18, 32, 0.08);
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error {
+  padding: 12px 14px;
+
+  border-radius: 9px;
+
+  background: #fae9ec;
+
+  border: 1px solid #e7c2c9;
+
+  color: #7a1827;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.actions {
+  display: flex;
+
+  gap: 10px;
+}
+
+.primaryButton {
+  flex: 1;
+
+  min-height: 48px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  background: #6b1220;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+
+.primaryButton:hover {
+  background: #4e0d17;
+
+  transform: translateY(-1px);
+}
+
+.resetButton {
+  min-height: 48px;
+
+  padding: 0 18px;
+
+  border: 1px solid #ddd5d5;
+
+  border-radius: 9px;
+
+  background: white;
+
+  color: #5c5656;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.resetButton:hover {
+  border-color: #6b1220;
+
+  color: #6b1220;
+}
+
+
+/* =====================================================
+   NOTICE
+===================================================== */
+
+.notice {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  padding: 12px 14px;
+
+  border-radius: 9px;
+
+  background: #f7f5f3;
+
+  color: #777070;
+}
+
+.notice svg {
+  flex-shrink: 0;
+
+  margin-top: 2px;
+
+  color: #6b1220;
+}
+
+.notice p {
+  margin: 0;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+  margin-top: 38px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #dfdada;
+
+  color: #8b8585;
+
+  font-size: 10px;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .main {
+    width: min(100% - 24px, 900px);
+
+    padding-top: 35px;
+  }
+
+  .intro h1 {
+    font-size: 34px;
+  }
+
+  .cardTop,
+  .form {
+    padding: 19px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    grid-column: auto;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .resetButton {
+    width: 100%;
+  }
+}
