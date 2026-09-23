@@ -23,7 +23,7 @@ import styles from "./page.module.css";
    CONFIGURATION
 ===================================================== */
 
-const WHATSAPP_NUMBER = "2250777043568";
+const WHATSAPP_NUMBER = "2250789763083";
 
 
 /* =====================================================
