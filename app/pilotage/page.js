@@ -40,6 +40,7 @@ const TYPES_DOSSIER = [
   "Droit des affaires",
   "Droit du travail",
   "Autre",
+  "A voir",
 ];
 
 
@@ -48,8 +49,9 @@ const TYPES_DOSSIER = [
 ===================================================== */
 
 const RESPONSABLES = [
-  "Noella",
+  "Mariame",
   "Assistante",
+  "Boss",
   "Cabinet LAWRY",
 ];
 
