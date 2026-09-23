@@ -91,10 +91,12 @@ function formatDate(value) {
 
 /* =====================================================
    FORMULAIRE INITIAL
+   (aligné sur les colonnes de la feuille "Dossiers & Relances")
 ===================================================== */
 
 const INITIAL_FORM = {
   client: "",
+  nomPrenoms: "",
   type: "",
   responsable: "",
   dateOuverture: getToday(),
@@ -160,7 +162,8 @@ export default function PilotagePage() {
     return [
       "⚖️ CABINET LAWRY — Nouveau dossier",
       "",
-      `Client : ${form.client || "—"}`,
+      `Client / Entreprise : ${form.client || "—"}`,
+      `Nom et prénoms : ${form.nomPrenoms.trim() || "—"}`,
       `Type : ${form.type || "—"}`,
       `Responsable : ${form.responsable || "—"}`,
       `Date d'ouverture : ${formatDate(form.dateOuverture)}`,
@@ -187,14 +190,15 @@ export default function PilotagePage() {
       "",
       "NOUVEAU DOSSIER",
       "",
-      `Client : ${form.client || "—"}`,
-      `Type de dossier : ${form.type || "—"}`,
-      `Responsable : ${form.responsable || "—"}`,
-      `Date d'ouverture : ${formatDate(form.dateOuverture)}`,
-      `Échéance / relance prévue : ${formatDate(form.echeance)}`,
-      `Réglé : ${form.regle}`,
-      `Dernière relance : ${formatDate(form.derniereRelance)}`,
-      `Notes : ${form.notes.trim() || "—"}`,
+      `Client / Entreprise (colonne B) : ${form.client || "—"}`,
+      `Nom et prénoms (colonne C) : ${form.nomPrenoms.trim() || "—"}`,
+      `Type de dossier (colonne D) : ${form.type || "—"}`,
+      `Responsable (colonne E) : ${form.responsable || "—"}`,
+      `Date d'ouverture (colonne F) : ${formatDate(form.dateOuverture)}`,
+      `Échéance / relance prévue (colonne G) : ${formatDate(form.echeance)}`,
+      `Réglé (colonne H) : ${form.regle}`,
+      `Dernière relance (colonne J) : ${formatDate(form.derniereRelance)}`,
+      `Notes (colonne K) : ${form.notes.trim() || "—"}`,
       "",
       "INSTRUCTIONS POUR LA MISE À JOUR",
       "",
@@ -202,7 +206,7 @@ export default function PilotagePage() {
       "2. Ne pas supprimer les données déjà présentes.",
       "3. Ne pas modifier les formules existantes.",
       "4. Conserver la structure actuelle du fichier.",
-      "5. Ne pas remplir manuellement la colonne Statut si elle est calculée par une formule.",
+      "5. Ne pas remplir manuellement la colonne Statut (colonne I) si elle est calculée par une formule.",
       "6. Vérifier les dates avant d'enregistrer.",
       "7. Enregistrer le fichier après modification.",
     ].join("\n");
@@ -460,7 +464,7 @@ export default function PilotagePage() {
                 >
 
                   <label htmlFor="client">
-                    Client *
+                    Client / Entreprise *
                   </label>
 
                   <input
@@ -471,6 +475,32 @@ export default function PilotagePage() {
                     onChange={(e) =>
                       updateField(
                         "client",
+                        e.target.value
+                      )
+                    }
+                  />
+
+                </div>
+
+
+                {/* NOM ET PRENOMS */}
+
+                <div
+                  className={`${styles.field} ${styles.full}`}
+                >
+
+                  <label htmlFor="nomPrenoms">
+                    Nom et prénoms
+                  </label>
+
+                  <input
+                    id="nomPrenoms"
+                    type="text"
+                    placeholder="Nom et prénoms du contact / interlocuteur"
+                    value={form.nomPrenoms}
+                    onChange={(e) =>
+                      updateField(
+                        "nomPrenoms",
                         e.target.value
                       )
                     }
