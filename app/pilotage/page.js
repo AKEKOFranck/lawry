@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   FiArrowLeft,
@@ -9,6 +9,7 @@ import {
   FiCheckCircle,
   FiClipboard,
   FiCopy,
+  FiDatabase,
   FiMessageCircle,
   FiRefreshCcw,
   FiSend,
@@ -18,17 +19,9 @@ import Link from "next/link";
 
 import styles from "./page.module.css";
 
-
-/* =====================================================
-   CONFIGURATION
-===================================================== */
+/* CONFIGURATION */
 
 const WHATSAPP_NUMBER = "2250789763083";
-
-
-/* =====================================================
-   TYPES DE DOSSIER
-===================================================== */
 
 const TYPES_DOSSIER = [
   "Conseil et assistance juridique",
@@ -43,58 +36,25 @@ const TYPES_DOSSIER = [
   "A voir",
 ];
 
+const RESPONSABLES = ["Mariame", "Assistante", "Boss", "Cabinet LAWRY"];
 
-/* =====================================================
-   RESPONSABLES
-===================================================== */
-
-const RESPONSABLES = [
-  "Mariame",
-  "Assistante",
-  "Boss",
-  "Cabinet LAWRY",
-];
-
-
-/* =====================================================
-   DATE DU JOUR
-===================================================== */
+/* DATES */
 
 function getToday() {
   const d = new Date();
-
   const mm = String(d.getMonth() + 1).padStart(2, "0");
-
   const dd = String(d.getDate()).padStart(2, "0");
-
   return `${d.getFullYear()}-${mm}-${dd}`;
 }
 
-
-/* =====================================================
-   FORMAT DATE
-===================================================== */
-
 function formatDate(value) {
-
-  if (!value) {
-    return "—";
-  }
-
+  if (!value) return "—";
   const date = new Date(`${value}T00:00:00`);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
+  if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("fr-FR").format(date);
 }
 
-
-/* =====================================================
-   FORMULAIRE INITIAL
-   (aligné sur les colonnes de la feuille "Dossiers & Relances")
-===================================================== */
+/* FORMULAIRE INITIAL (colonnes de la feuille "Dossiers & Relances") */
 
 const INITIAL_FORM = {
   client: "",
@@ -108,43 +68,30 @@ const INITIAL_FORM = {
   notes: "",
 };
 
-
-/* =====================================================
-   PAGE
-===================================================== */
+/* PAGE */
 
 export default function PilotagePage() {
-
   const [form, setForm] = useState(INITIAL_FORM);
-
   const [copied, setCopied] = useState("");
-
   const [error, setError] = useState("");
 
+  // Enregistrement dans le classeur
+  const [pin, setPin] = useState("");
+  const [saveState, setSaveState] = useState({ status: "idle", message: "" });
 
-  /* ===================================================
-     MODIFICATION
-  =================================================== */
+  useEffect(() => {
+    try {
+      setPin(localStorage.getItem("lawry_pin") || "");
+    } catch {}
+  }, []);
 
   function updateField(field, value) {
-
-    setForm((current) => ({
-      ...current,
-      [field]: value,
-    }));
-
-    if (error) {
-      setError("");
-    }
+    setForm((current) => ({ ...current, [field]: value }));
+    if (error) setError("");
+    if (saveState.status !== "idle") setSaveState({ status: "idle", message: "" });
   }
 
-
-  /* ===================================================
-     VALIDATION
-  =================================================== */
-
   function isValid() {
-
     return (
       form.client.trim() &&
       form.type &&
@@ -154,13 +101,9 @@ export default function PilotagePage() {
     );
   }
 
-
-  /* ===================================================
-     MESSAGE WHATSAPP
-  =================================================== */
+  /* MESSAGE WHATSAPP */
 
   const whatsappMessage = useMemo(() => {
-
     return [
       "⚖️ CABINET LAWRY — Nouveau dossier",
       "",
@@ -174,16 +117,11 @@ export default function PilotagePage() {
       `Dernière relance : ${formatDate(form.derniereRelance)}`,
       `Notes : ${form.notes.trim() || "—"}`,
     ].join("\n");
-
   }, [form]);
 
-
-  /* ===================================================
-     MESSAGE POUR CLAUDE
-  =================================================== */
+  /* MESSAGE POUR CLAUDE (secours manuel) */
 
   const claudeMessage = useMemo(() => {
-
     return [
       "MISE À JOUR DU FICHIER EXCEL — CABINET LAWRY",
       "",
@@ -192,753 +130,418 @@ export default function PilotagePage() {
       "",
       "NOUVEAU DOSSIER",
       "",
-      `Client / Entreprise (colonne B) : ${form.client || "—"}`,
-      `Nom et prénoms (colonne C) : ${form.nomPrenoms.trim() || "—"}`,
-      `Type de dossier (colonne D) : ${form.type || "—"}`,
-      `Responsable (colonne E) : ${form.responsable || "—"}`,
-      `Date d'ouverture (colonne F) : ${formatDate(form.dateOuverture)}`,
-      `Échéance / relance prévue (colonne G) : ${formatDate(form.echeance)}`,
-      `Réglé (colonne H) : ${form.regle}`,
-      `Dernière relance (colonne J) : ${formatDate(form.derniereRelance)}`,
-      `Notes (colonne K) : ${form.notes.trim() || "—"}`,
+      `Client / Entreprise : ${form.client || "—"}`,
+      `Nom et prénoms : ${form.nomPrenoms.trim() || "—"}`,
+      `Type de dossier : ${form.type || "—"}`,
+      `Responsable : ${form.responsable || "—"}`,
+      `Date d'ouverture : ${formatDate(form.dateOuverture)}`,
+      `Échéance / relance prévue : ${formatDate(form.echeance)}`,
+      `Réglé : ${form.regle}`,
+      `Dernière relance : ${formatDate(form.derniereRelance)}`,
+      `Notes : ${form.notes.trim() || "—"}`,
       "",
       "INSTRUCTIONS POUR LA MISE À JOUR",
       "",
-      "1. Ajouter ce dossier à la prochaine ligne disponible.",
+      "1. Ajouter ce dossier à la prochaine ligne disponible (en retrouvant les colonnes par leur en-tête).",
       "2. Ne pas supprimer les données déjà présentes.",
       "3. Ne pas modifier les formules existantes.",
       "4. Conserver la structure actuelle du fichier.",
-      "5. Ne pas remplir manuellement la colonne Statut (colonne I) si elle est calculée par une formule.",
+      "5. Ne pas remplir la colonne Statut : elle est calculée par une formule.",
       "6. Vérifier les dates avant d'enregistrer.",
       "7. Enregistrer le fichier après modification.",
     ].join("\n");
-
   }, [form]);
 
+  /* ENREGISTRER DANS LE CLASSEUR */
 
-  /* ===================================================
-     ENVOYER WHATSAPP
-  =================================================== */
-
-  function sendWhatsApp() {
-
+  async function saveToSheet() {
     if (!isValid()) {
-
-      setError(
-        "Veuillez renseigner les champs obligatoires avant l'envoi."
-      );
-
+      setError("Veuillez renseigner les champs obligatoires avant l'enregistrement.");
+      return;
+    }
+    if (!pin.trim()) {
+      setError("Renseignez le code équipe.");
       return;
     }
 
+    setError("");
+    setSaveState({ status: "loading", message: "" });
+
+    try {
+      const res = await fetch("/api/lawry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "addDossier", data: form, pin }),
+      });
+      const json = await res.json();
+
+      if (!json.ok) throw new Error(json.error || "Échec de l'enregistrement");
+
+      try {
+        localStorage.setItem("lawry_pin", pin);
+      } catch {}
+
+      setSaveState({
+        status: "success",
+        message: `Dossier n°${json.data.id} enregistré dans le classeur (ligne ${json.data.ligne}).`,
+      });
+    } catch (err) {
+      setSaveState({ status: "error", message: err.message });
+    }
+  }
+
+  /* WHATSAPP */
+
+  function sendWhatsApp() {
+    if (!isValid()) {
+      setError("Veuillez renseigner les champs obligatoires avant l'envoi.");
+      return;
+    }
     setError("");
 
     const url =
       `https://wa.me/${WHATSAPP_NUMBER}?text=` +
       encodeURIComponent(whatsappMessage);
 
-    window.open(
-      url,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
-
-  /* ===================================================
-     COPIER WHATSAPP
-  =================================================== */
-
-  async function copyWhatsApp() {
-
+  async function copyText(text, key) {
     if (!isValid()) {
-
-      setError(
-        "Veuillez renseigner les champs obligatoires avant de copier."
-      );
-
+      setError("Veuillez renseigner les champs obligatoires avant de copier.");
       return;
     }
-
     try {
-
-      await navigator.clipboard.writeText(
-        whatsappMessage
-      );
-
-      setCopied("whatsapp");
-
-      setTimeout(() => {
-        setCopied("");
-      }, 2000);
-
+      await navigator.clipboard.writeText(text);
+      setCopied(key);
+      setTimeout(() => setCopied(""), 2000);
     } catch {
-
-      setError(
-        "La copie automatique n'est pas disponible sur ce navigateur."
-      );
-
+      setError("La copie automatique n'est pas disponible sur ce navigateur.");
     }
   }
-
-
-  /* ===================================================
-     COPIER POUR CLAUDE
-  =================================================== */
-
-  async function copyClaude() {
-
-    if (!isValid()) {
-
-      setError(
-        "Veuillez renseigner les champs obligatoires avant de copier."
-      );
-
-      return;
-    }
-
-    try {
-
-      await navigator.clipboard.writeText(
-        claudeMessage
-      );
-
-      setCopied("claude");
-
-      setTimeout(() => {
-        setCopied("");
-      }, 2000);
-
-    } catch {
-
-      setError(
-        "La copie automatique n'est pas disponible sur ce navigateur."
-      );
-
-    }
-  }
-
-
-  /* ===================================================
-     RÉINITIALISER
-  =================================================== */
 
   function resetForm() {
-
-    setForm({
-      ...INITIAL_FORM,
-      dateOuverture: getToday(),
-    });
-
+    setForm({ ...INITIAL_FORM, dateOuverture: getToday() });
     setCopied("");
-
     setError("");
+    setSaveState({ status: "idle", message: "" });
   }
-
-
-  /* ===================================================
-     RENDU
-  =================================================== */
 
   return (
     <main className={styles.page}>
-
-      {/* =================================================
-          HEADER
-      ================================================= */}
-
+      {/* HEADER */}
       <header className={styles.header}>
-
         <div className={styles.headerInner}>
-
-          <Link
-            href="/"
-            className={styles.brand}
-          >
-
-            <div className={styles.logo}>
-              ⚖️
-            </div>
-
+          <Link href="/" className={styles.brand}>
+            <div className={styles.logo}>⚖️</div>
             <div>
-              <p className={styles.brandName}>
-                Cabinet LAWRY
-              </p>
-
-              <p className={styles.brandSubtitle}>
-                Pilotage juridique
-              </p>
+              <p className={styles.brandName}>Cabinet LAWRY</p>
+              <p className={styles.brandSubtitle}>Pilotage juridique</p>
             </div>
-
           </Link>
 
-
-          <Link
-            href="/"
-            className={styles.backLink}
-          >
+          <Link href="/" className={styles.backLink}>
             <FiArrowLeft size={15} />
             Accueil
           </Link>
-
         </div>
-
       </header>
 
-
-      {/* =================================================
-          MAIN
-      ================================================= */}
-
       <section className={styles.main}>
-
-        {/* =================================================
-            INTRO
-        ================================================= */}
-
+        {/* INTRO */}
         <div className={styles.hero}>
-
-          <span className={styles.kicker}>
-            ESPACE INTERNE
-          </span>
-
-          <h1>
-            Pilotage des dossiers
-          </h1>
-
+          <span className={styles.kicker}>ESPACE INTERNE</span>
+          <h1>Pilotage des dossiers</h1>
           <p>
-            Préparez les informations d'un dossier,
-            transmettez-les au Cabinet via WhatsApp
-            et générez le contenu prêt à être intégré
-            dans le fichier Excel.
+            Renseignez un dossier, enregistrez-le directement dans le
+            classeur de pilotage et, si besoin, transmettez-le au
+            Cabinet via WhatsApp.
           </p>
-
         </div>
 
-
-        {/* =================================================
-            FORMULAIRE
-        ================================================= */}
-
+        {/* FORMULAIRE */}
         <section className={styles.card}>
-
           <div className={styles.cardHeader}>
-
             <div className={styles.cardIcon}>
               <FiBriefcase size={19} />
             </div>
-
             <div>
-              <h2>
-                Nouveau dossier
-              </h2>
-
-              <p>
-                Renseignez les informations de pilotage.
-              </p>
+              <h2>Nouveau dossier</h2>
+              <p>Renseignez les informations de pilotage.</p>
             </div>
-
           </div>
 
-
           <div className={styles.cardBody}>
-
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className={styles.form}
-            >
-
-              {/* =========================================
-                  INFORMATIONS
-              ========================================= */}
-
-              <div className={styles.sectionLabel}>
-                Informations du dossier
-              </div>
-
+            <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
+              <div className={styles.sectionLabel}>Informations du dossier</div>
 
               <div className={styles.grid}>
-
                 {/* CLIENT */}
-
-                <div
-                  className={`${styles.field} ${styles.full}`}
-                >
-
-                  <label htmlFor="client">
-                    Client / Entreprise *
-                  </label>
-
+                <div className={`${styles.field} ${styles.full}`}>
+                  <label htmlFor="client">Client / Entreprise *</label>
                   <input
                     id="client"
                     type="text"
                     placeholder="Nom du client ou de la société"
                     value={form.client}
-                    onChange={(e) =>
-                      updateField(
-                        "client",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("client", e.target.value)}
                   />
-
                 </div>
 
-
                 {/* NOM ET PRENOMS */}
-
-                <div
-                  className={`${styles.field} ${styles.full}`}
-                >
-
-                  <label htmlFor="nomPrenoms">
-                    Nom et prénoms
-                  </label>
-
+                <div className={`${styles.field} ${styles.full}`}>
+                  <label htmlFor="nomPrenoms">Nom et prénoms</label>
                   <input
                     id="nomPrenoms"
                     type="text"
                     placeholder="Nom et prénoms du contact / interlocuteur"
                     value={form.nomPrenoms}
-                    onChange={(e) =>
-                      updateField(
-                        "nomPrenoms",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("nomPrenoms", e.target.value)}
                   />
-
                 </div>
 
-
                 {/* TYPE */}
-
                 <div className={styles.field}>
-
-                  <label htmlFor="type">
-                    Type de dossier *
-                  </label>
-
+                  <label htmlFor="type">Type de dossier *</label>
                   <select
                     id="type"
                     value={form.type}
-                    onChange={(e) =>
-                      updateField(
-                        "type",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("type", e.target.value)}
                   >
-
-                    <option value="">
-                      Sélectionner
-                    </option>
-
+                    <option value="">Sélectionner</option>
                     {TYPES_DOSSIER.map((type) => (
-                      <option
-                        key={type}
-                        value={type}
-                      >
+                      <option key={type} value={type}>
                         {type}
                       </option>
                     ))}
-
                   </select>
-
                 </div>
 
-
                 {/* RESPONSABLE */}
-
                 <div className={styles.field}>
-
-                  <label htmlFor="responsable">
-                    Responsable *
-                  </label>
-
+                  <label htmlFor="responsable">Responsable *</label>
                   <select
                     id="responsable"
                     value={form.responsable}
-                    onChange={(e) =>
-                      updateField(
-                        "responsable",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("responsable", e.target.value)}
                   >
-
-                    <option value="">
-                      Sélectionner
-                    </option>
-
+                    <option value="">Sélectionner</option>
                     {RESPONSABLES.map((responsable) => (
-                      <option
-                        key={responsable}
-                        value={responsable}
-                      >
+                      <option key={responsable} value={responsable}>
                         {responsable}
                       </option>
                     ))}
-
                   </select>
-
                 </div>
 
-
                 {/* DATE OUVERTURE */}
-
                 <div className={styles.field}>
-
-                  <label htmlFor="dateOuverture">
-                    Date d'ouverture *
-                  </label>
-
+                  <label htmlFor="dateOuverture">Date d'ouverture *</label>
                   <input
                     id="dateOuverture"
                     type="date"
                     value={form.dateOuverture}
-                    onChange={(e) =>
-                      updateField(
-                        "dateOuverture",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("dateOuverture", e.target.value)}
                   />
-
                 </div>
 
-
                 {/* ECHEANCE */}
-
                 <div className={styles.field}>
-
-                  <label htmlFor="echeance">
-                    Échéance / relance *
-                  </label>
-
+                  <label htmlFor="echeance">Échéance / relance *</label>
                   <input
                     id="echeance"
                     type="date"
                     value={form.echeance}
-                    onChange={(e) =>
-                      updateField(
-                        "echeance",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("echeance", e.target.value)}
                   />
-
                 </div>
-
 
                 {/* REGLE */}
-
                 <div className={styles.field}>
-
-                  <label>
-                    Dossier réglé ?
-                  </label>
+                  <label>Dossier réglé ?</label>
 
                   <div className={styles.radioGroup}>
-
-                    <label
-                      className={
-                        form.regle === "Non"
-                          ? styles.radioActive
-                          : styles.radio
-                      }
-                    >
-
-                      <input
-                        type="radio"
-                        name="regle"
-                        value="Non"
-                        checked={form.regle === "Non"}
-                        onChange={(e) =>
-                          updateField(
-                            "regle",
-                            e.target.value
-                          )
+                    {["Non", "Oui"].map((option) => (
+                      <label
+                        key={option}
+                        className={
+                          form.regle === option ? styles.radioActive : styles.radio
                         }
-                      />
-
-                      Non
-
-                    </label>
-
-
-                    <label
-                      className={
-                        form.regle === "Oui"
-                          ? styles.radioActive
-                          : styles.radio
-                      }
-                    >
-
-                      <input
-                        type="radio"
-                        name="regle"
-                        value="Oui"
-                        checked={form.regle === "Oui"}
-                        onChange={(e) =>
-                          updateField(
-                            "regle",
-                            e.target.value
-                          )
-                        }
-                      />
-
-                      Oui
-
-                    </label>
-
+                      >
+                        <input
+                          type="radio"
+                          name="regle"
+                          value={option}
+                          checked={form.regle === option}
+                          onChange={(e) => updateField("regle", e.target.value)}
+                        />
+                        {option}
+                      </label>
+                    ))}
                   </div>
-
                 </div>
 
-
                 {/* DERNIERE RELANCE */}
-
                 <div className={styles.field}>
-
-                  <label htmlFor="derniereRelance">
-                    Dernière relance
-                  </label>
-
+                  <label htmlFor="derniereRelance">Dernière relance</label>
                   <input
                     id="derniereRelance"
                     type="date"
                     value={form.derniereRelance}
-                    onChange={(e) =>
-                      updateField(
-                        "derniereRelance",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("derniereRelance", e.target.value)}
                   />
-
                 </div>
 
-
                 {/* NOTES */}
-
-                <div
-                  className={`${styles.field} ${styles.full}`}
-                >
-
-                  <label htmlFor="notes">
-                    Notes
-                  </label>
-
+                <div className={`${styles.field} ${styles.full}`}>
+                  <label htmlFor="notes">Notes</label>
                   <textarea
                     id="notes"
                     placeholder="Précisions, observations, prochaine action..."
                     value={form.notes}
-                    onChange={(e) =>
-                      updateField(
-                        "notes",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => updateField("notes", e.target.value)}
                   />
-
                 </div>
 
+                {/* CODE EQUIPE */}
+                <div className={`${styles.field} ${styles.full}`}>
+                  <label htmlFor="pin">Code équipe *</label>
+                  <input
+                    id="pin"
+                    type="password"
+                    placeholder="Saisi une seule fois"
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value)}
+                  />
+                </div>
               </div>
 
+              {/* MESSAGES */}
+              {error && <div className={styles.error}>{error}</div>}
 
-              {/* =========================================
-                  ERREUR
-              ========================================= */}
+              {saveState.status === "error" && (
+                <div className={styles.error}>{saveState.message}</div>
+              )}
 
-              {error && (
-                <div className={styles.error}>
-                  {error}
+              {saveState.status === "success" && (
+                <div className={styles.saveOk}>
+                  <FiCheckCircle size={16} />
+                  {saveState.message}
                 </div>
               )}
 
-
-              {/* =========================================
-                  ACTIONS
-              ========================================= */}
-
+              {/* ACTIONS */}
               <div className={styles.actions}>
-
                 <button
                   type="button"
                   className={`${styles.button} ${styles.primary}`}
-                  onClick={sendWhatsApp}
+                  onClick={saveToSheet}
+                  disabled={saveState.status === "loading"}
                 >
-
-                  <FiSend size={16} />
-
-                  Envoyer sur WhatsApp
-
+                  <FiDatabase size={16} />
+                  {saveState.status === "loading"
+                    ? "Enregistrement…"
+                    : "Enregistrer dans Excel"}
                 </button>
-
 
                 <button
                   type="button"
                   className={`${styles.button} ${styles.secondary}`}
-                  onClick={copyWhatsApp}
+                  onClick={sendWhatsApp}
                 >
+                  <FiSend size={16} />
+                  Envoyer sur WhatsApp
+                </button>
 
+                <button
+                  type="button"
+                  className={`${styles.button} ${styles.secondary}`}
+                  onClick={() => copyText(whatsappMessage, "whatsapp")}
+                >
                   {copied === "whatsapp" ? (
                     <FiCheck size={16} />
                   ) : (
                     <FiMessageCircle size={16} />
                   )}
-
-                  {copied === "whatsapp"
-                    ? "Message copié"
-                    : "Copier WhatsApp"}
-
+                  {copied === "whatsapp" ? "Message copié" : "Copier WhatsApp"}
                 </button>
-
               </div>
 
-
-              {/* =========================================
-                  CLAUDE
-              ========================================= */}
-
+              {/* CLAUDE (secours manuel) */}
               <div className={styles.claudeBox}>
-
                 <div className={styles.claudeHeader}>
-
                   <div>
-
-                    <span className={styles.claudeBadge}>
-                      02
-                    </span>
-
+                    <span className={styles.claudeBadge}>02</span>
                     <div>
-
-                      <h3>
-                        Préparer la mise à jour Excel
-                      </h3>
-
-                      <p>
-                        Génère un message structuré à
-                        copier dans Claude.
-                      </p>
-
+                      <h3>Mise à jour manuelle d'Excel</h3>
+                      <p>Solution de secours : message à copier dans Claude.</p>
                     </div>
-
                   </div>
-
                   <FiClipboard size={19} />
-
                 </div>
 
-
                 <div className={styles.claudeContent}>
-
                   <p>
-                    Le message contiendra les informations
-                    du dossier ainsi que les instructions
-                    nécessaires pour mettre à jour
+                    Le message contiendra les informations du dossier ainsi que
+                    les instructions pour mettre à jour
                     <strong> Cabinet-LAWRY-pilotage.xlsx</strong>.
                   </p>
-
 
                   <button
                     type="button"
                     className={styles.claudeButton}
-                    onClick={copyClaude}
+                    onClick={() => copyText(claudeMessage, "claude")}
                   >
-
-                    {copied === "claude" ? (
-                      <FiCheck size={17} />
-                    ) : (
-                      <FiCopy size={17} />
-                    )}
-
-                    {copied === "claude"
-                      ? "Instructions copiées"
-                      : "Copier pour Claude"}
-
+                    {copied === "claude" ? <FiCheck size={17} /> : <FiCopy size={17} />}
+                    {copied === "claude" ? "Instructions copiées" : "Copier pour Claude"}
                   </button>
-
                 </div>
-
               </div>
 
-
-              {/* =========================================
-                  RESET
-              ========================================= */}
-
+              {/* RESET */}
               <button
                 type="button"
                 className={styles.resetButton}
                 onClick={resetForm}
               >
-
                 <FiRefreshCcw size={15} />
-
                 Réinitialiser le formulaire
-
               </button>
-
             </form>
-
           </div>
-
         </section>
 
-
-        {/* =================================================
-            WORKFLOW
-        ================================================= */}
-
+        {/* WORKFLOW */}
         <section className={styles.workflow}>
-
           <div className={styles.workflowTitle}>
             <FiCheckCircle size={17} />
-
-            <span>
-              Processus de traitement
-            </span>
+            <span>Processus de traitement</span>
           </div>
 
           <div className={styles.workflowSteps}>
-
             <div>
               <strong>01</strong>
               <span>Recevoir la demande</span>
             </div>
-
             <div>
               <strong>02</strong>
               <span>Préparer le dossier</span>
             </div>
-
             <div>
               <strong>03</strong>
-              <span>Copier pour Claude</span>
+              <span>Enregistrer dans Excel</span>
             </div>
-
             <div>
               <strong>04</strong>
-              <span>Mettre à jour Excel</span>
+              <span>Suivre les relances</span>
             </div>
-
           </div>
-
         </section>
-
-
-        {/* =================================================
-            FOOTER
-        ================================================= */}
 
         <footer className={styles.footer}>
           Cabinet LAWRY · Espace interne de pilotage
         </footer>
-
       </section>
-
     </main>
   );
 }
