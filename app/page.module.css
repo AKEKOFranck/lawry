@@ -1,7 +1,25 @@
+/* =====================================================
+   CABINET LAWRY
+   DESIGN : BORDEAUX & BLANC
+   FICHIER : page.module.css
+===================================================== */
+
+
+/* =====================================================
+   PAGE GLOBALE
+===================================================== */
+
 .page {
   min-height: 100vh;
   background: #f7f5f3;
   color: #211e1e;
+  overflow-x: clip;
+}
+
+.page,
+.page::before,
+.page::after {
+  box-sizing: border-box;
 }
 
 
@@ -12,58 +30,67 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
 
-  background: rgba(255, 255, 255, 0.94);
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.96);
 
   border-bottom: 1px solid rgba(107, 18, 32, 0.1);
 
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .headerInner {
   width: min(1180px, calc(100% - 40px));
-
   min-height: 70px;
 
   margin: auto;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   gap: 20px;
 }
 
+
+/* =====================================================
+   BRAND
+===================================================== */
+
 .brand {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
 
   color: inherit;
-
   text-decoration: none;
+
+  min-width: 0;
+  flex-shrink: 0;
 }
 
 .logo {
+  flex-shrink: 0;
+
   width: 40px;
   height: 40px;
 
   display: grid;
-
   place-items: center;
 
   border-radius: 11px;
 
   background: #6b1220;
-
   color: white;
 
   font-size: 19px;
+}
+
+.brandText {
+  min-width: 0;
 }
 
 .brandName {
@@ -72,10 +99,10 @@
   color: #4c1019;
 
   font-family: Georgia, serif;
-
   font-size: 17px;
-
   font-weight: 700;
+
+  white-space: nowrap;
 }
 
 .brandSubtitle {
@@ -84,32 +111,75 @@
   color: #8d8585;
 
   font-size: 9px;
-
   font-weight: 700;
 
   letter-spacing: 0.13em;
-
   text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.headerLinks {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .headerLink {
   display: inline-flex;
-
   align-items: center;
+  justify-content: center;
 
   gap: 7px;
+
+  min-height: 40px;
+
+  padding: 9px 13px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
 
   color: #6b1220;
 
   font-size: 12px;
-
   font-weight: 700;
 
   text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .headerLink:hover {
   color: #43101a;
+  background: #f4e8ea;
+  border-color: rgba(107, 18, 32, 0.12);
+}
+
+.headerLinkIconOnly {
+  display: none;
+  flex-shrink: 0;
+}
+
+.headerLinkText {
+  white-space: nowrap;
+}
+
+.headerLinkArrow {
+  display: inline-flex;
+  flex-shrink: 0;
 }
 
 
@@ -127,6 +197,8 @@
       transparent 30%
     ),
     #f7f5f3;
+
+  overflow: hidden;
 }
 
 .heroInner {
@@ -136,7 +208,9 @@
 
   display: grid;
 
-  grid-template-columns: minmax(0, 1.05fr) minmax(350px, 0.7fr);
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(350px, 0.7fr);
 
   align-items: center;
 
@@ -145,11 +219,16 @@
 
 .heroContent {
   max-width: 680px;
+  min-width: 0;
 }
+
+
+/* =====================================================
+   BADGE
+===================================================== */
 
 .badge {
   display: inline-flex;
-
   align-items: center;
 
   gap: 7px;
@@ -159,17 +238,19 @@
   border-radius: 999px;
 
   background: #f1e4e7;
-
   color: #6b1220;
 
   font-size: 10px;
-
   font-weight: 800;
 
   letter-spacing: 0.08em;
-
   text-transform: uppercase;
 }
+
+
+/* =====================================================
+   TITRE HERO
+===================================================== */
 
 .hero h1 {
   margin: 20px 0 0;
@@ -178,16 +259,16 @@
 
   font-family: Georgia, serif;
 
-  font-size: clamp(42px, 5.5vw, 67px);
+  font-size: clamp(34px, 5.5vw, 67px);
 
-  line-height: 1.02;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 
-  letter-spacing: -0.045em;
+  overflow-wrap: break-word;
 }
 
 .hero h1 span {
   display: block;
-
   color: #8a2637;
 }
 
@@ -199,7 +280,6 @@
   color: #777070;
 
   font-size: 15px;
-
   line-height: 1.8;
 }
 
@@ -210,7 +290,6 @@
 
 .heroActions {
   display: flex;
-
   flex-wrap: wrap;
 
   gap: 11px;
@@ -223,9 +302,7 @@
   min-height: 48px;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
   gap: 9px;
@@ -235,27 +312,30 @@
   border-radius: 9px;
 
   font-size: 12px;
-
   font-weight: 800;
 
   text-decoration: none;
+  text-align: center;
 
   transition:
-    transform 0.2s,
-    background 0.2s,
-    border-color 0.2s;
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .primaryButton {
   background: #6b1220;
-
   color: white;
+
+  border: 1px solid #6b1220;
 
   box-shadow: 0 9px 24px rgba(107, 18, 32, 0.18);
 }
 
 .primaryButton:hover {
   background: #4e0d17;
+  border-color: #4e0d17;
 
   transform: translateY(-2px);
 }
@@ -264,13 +344,11 @@
   border: 1px solid #d9d1d1;
 
   background: white;
-
   color: #5c5555;
 }
 
 .secondaryButton:hover {
   border-color: #6b1220;
-
   color: #6b1220;
 
   transform: translateY(-2px);
@@ -284,18 +362,16 @@
 .heroCard {
   overflow: hidden;
 
+  min-width: 0;
   min-height: 400px;
 
   display: flex;
-
   flex-direction: column;
-
   justify-content: space-between;
 
   border-radius: 22px;
 
   background: #4e0e18;
-
   color: white;
 
   box-shadow: 0 25px 60px rgba(55, 15, 22, 0.18);
@@ -303,9 +379,7 @@
 
 .heroCardTop {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   padding: 25px;
@@ -313,7 +387,6 @@
 
 .heroCardTop > span {
   font-size: 10px;
-
   font-weight: 800;
 
   letter-spacing: 0.16em;
@@ -326,7 +399,6 @@
   height: 43px;
 
   display: grid;
-
   place-items: center;
 
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -346,7 +418,6 @@
   color: #d9aeb6;
 
   font-size: 10px;
-
   font-weight: 800;
 
   letter-spacing: 0.15em;
@@ -358,7 +429,6 @@
   font-family: Georgia, serif;
 
   font-size: 37px;
-
   line-height: 1.1;
 
   letter-spacing: -0.025em;
@@ -372,23 +442,28 @@
   color: rgba(255, 255, 255, 0.66);
 
   font-size: 13px;
-
   line-height: 1.7;
 }
+
+
+/* =====================================================
+   HERO CARD — ÉTAPES
+===================================================== */
 
 .heroCardBottom {
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .heroCardBottom div {
+  min-width: 0;
+
   padding: 18px;
 
   display: flex;
-
   flex-direction: column;
 
   gap: 5px;
@@ -402,7 +477,6 @@
 
 .heroCardBottom strong {
   font-family: Georgia, serif;
-
   font-size: 19px;
 }
 
@@ -410,11 +484,9 @@
   color: rgba(255, 255, 255, 0.55);
 
   font-size: 9px;
-
   font-weight: 700;
 
   text-transform: uppercase;
-
   letter-spacing: 0.08em;
 }
 
@@ -441,7 +513,6 @@
   color: #6b1220;
 
   font-size: 10px;
-
   font-weight: 800;
 
   letter-spacing: 0.14em;
@@ -454,8 +525,7 @@
 
   font-family: Georgia, serif;
 
-  font-size: clamp(30px, 4vw, 43px);
-
+  font-size: clamp(28px, 4vw, 43px);
   line-height: 1.1;
 }
 
@@ -469,7 +539,6 @@
   color: #777070;
 
   font-size: 14px;
-
   line-height: 1.7;
 }
 
@@ -481,12 +550,14 @@
 .features {
   display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   gap: 16px;
 }
 
 .featureCard {
+  min-width: 0;
+
   padding: 27px;
 
   border: 1px solid #e4dddd;
@@ -496,8 +567,8 @@
   background: white;
 
   transition:
-    transform 0.2s,
-    box-shadow 0.2s;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .featureCard:hover {
@@ -511,13 +582,11 @@
   height: 40px;
 
   display: grid;
-
   place-items: center;
 
   border-radius: 10px;
 
   background: #f4e8ea;
-
   color: #6b1220;
 }
 
@@ -537,7 +606,6 @@
   color: #777070;
 
   font-size: 12px;
-
   line-height: 1.7;
 }
 
@@ -558,9 +626,7 @@
   padding: 38px 42px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   gap: 30px;
@@ -570,11 +636,14 @@
   background: #eee7e5;
 }
 
+.cta > div {
+  min-width: 0;
+}
+
 .cta span {
   color: #6b1220;
 
   font-size: 9px;
-
   font-weight: 800;
 
   letter-spacing: 0.14em;
@@ -596,6 +665,7 @@
   color: #777070;
 
   font-size: 12px;
+  line-height: 1.7;
 }
 
 .ctaButton {
@@ -604,8 +674,8 @@
   min-height: 46px;
 
   display: inline-flex;
-
   align-items: center;
+  justify-content: center;
 
   gap: 8px;
 
@@ -614,18 +684,21 @@
   border-radius: 9px;
 
   background: #6b1220;
-
   color: white;
 
   font-size: 11px;
-
   font-weight: 800;
 
   text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .ctaButton:hover {
   background: #4e0d17;
+  transform: translateY(-2px);
 }
 
 
@@ -641,8 +714,10 @@
   padding: 22px 0 30px;
 
   display: flex;
-
+  align-items: center;
   justify-content: space-between;
+
+  gap: 15px;
 
   border-top: 1px solid #ddd7d7;
 
@@ -653,80 +728,552 @@
 
 
 /* =====================================================
-   RESPONSIVE
+   RESPONSIVE — TABLETTE
+   601px à 850px
 ===================================================== */
 
 @media (max-width: 850px) {
-
-  .heroInner {
-    grid-template-columns: 1fr;
-
-    gap: 45px;
-  }
-
-  .heroCard {
-    max-width: 600px;
-  }
-
-  .features {
-    grid-template-columns: 1fr;
-  }
-
-  .cta {
-    flex-direction: column;
-
-    align-items: flex-start;
-  }
-}
-
-
-@media (max-width: 600px) {
 
   .headerInner,
   .heroInner,
   .processSection,
   .ctaSection,
   .footer {
-    width: min(100% - 24px, 1180px);
+    width: calc(100% - 40px);
   }
 
-  .hero {
-    padding: 55px 0;
+  .headerInner {
+    gap: 12px;
   }
 
-  .hero h1 {
-    font-size: 39px;
+  .brand {
+    flex-shrink: 1;
   }
 
-  .heroCardContent {
-    padding: 15px 25px 30px;
-  }
-
-  .heroCardContent h2 {
-    font-size: 30px;
-  }
-
-  .processSection {
-    padding: 65px 0;
-  }
-
-  .cta {
-    padding: 28px 23px;
-  }
-
-  .cta h2 {
-    font-size: 25px;
-  }
-
-  .footer {
-    flex-direction: column;
-
-    gap: 8px;
-
-    text-align: center;
+  .headerLinks {
+    gap: 6px;
   }
 
   .headerLink {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .hero {
+    padding: 65px 0;
+  }
+
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .heroContent {
+    max-width: 700px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 54px);
+  }
+
+  .heroCard {
+    width: 100%;
+    max-width: 600px;
+    min-height: 360px;
+    margin: auto;
+  }
+
+  .features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ctaButton {
+    align-self: flex-start;
+  }
+}
+
+
+/* =====================================================
+   RESPONSIVE — MOBILE
+   600px et moins
+===================================================== */
+
+@media (max-width: 600px) {
+
+  /* HEADER */
+
+  .headerInner {
+    width: calc(100% - 20px);
+    min-height: 58px;
+    gap: 6px;
+  }
+
+  .brand {
+    gap: 7px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .brandText {
+    min-width: 0;
+  }
+
+  .logo {
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  .brandName {
+    font-size: clamp(11px, 3.2vw, 14px);
+    line-height: 1.2;
+  }
+
+  .brandSubtitle {
+    margin-top: 3px;
+    font-size: 7px;
+    letter-spacing: 0.06em;
+  }
+
+  .headerLinks {
+    display: flex;
+    flex: 0 0 auto;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .headerLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 34px;
+    padding: 7px 8px;
+
+    border: 1px solid rgba(107, 18, 32, 0.16);
+    border-radius: 8px;
+
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .headerLinkIconOnly {
     display: none;
+  }
+
+  .headerLinkText {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  .headerLinkArrow {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+
+  /* HERO */
+
+  .hero {
+    padding: 45px 0 40px;
+  }
+
+  .heroInner {
+    width: calc(100% - 28px);
+
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 30px;
+  }
+
+  .heroContent {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .badge {
+    padding: 7px 11px;
+    font-size: 9px;
+  }
+
+  .hero h1 {
+    margin-top: 18px;
+
+    font-size: clamp(29px, 7.5vw, 38px);
+
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+
+    overflow-wrap: break-word;
+  }
+
+  .hero h1 span {
+    display: inline;
+  }
+
+  .heroContent > p {
+    max-width: 100%;
+    margin-top: 20px;
+
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+
+  /* BOUTONS HERO */
+
+  .heroActions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    gap: 10px;
+
+    width: 100%;
+    margin-top: 25px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 46px;
+
+    padding: 12px 16px;
+
+    font-size: 12px;
+  }
+
+
+  /* CARTE HERO */
+
+  .heroCard {
+    width: 100%;
+    min-width: 0;
+    min-height: unset;
+
+    margin: 0;
+
+    border-radius: 17px;
+  }
+
+  .heroCardTop {
+    padding: 20px;
+  }
+
+  .heroIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .heroCardContent {
+    padding: 15px 22px 28px;
+  }
+
+  .smallLabel {
+    font-size: 9px;
+  }
+
+  .heroCardContent h2 {
+    font-size: clamp(25px, 6.5vw, 30px);
+    line-height: 1.15;
+  }
+
+  .heroCardContent p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .heroCardBottom {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .heroCardBottom div {
+    min-width: 0;
+
+    padding: 14px 7px;
+    gap: 5px;
+
+    overflow-wrap: break-word;
+  }
+
+  .heroCardBottom strong {
+    font-size: 16px;
+  }
+
+  .heroCardBottom span {
+    font-size: 8px;
+    letter-spacing: 0.03em;
+  }
+
+
+  /* PROCESS */
+
+  .processSection {
+    width: calc(100% - 28px);
+    padding: 60px 0;
+  }
+
+  .sectionIntro {
+    margin-bottom: 28px;
+  }
+
+  .sectionKicker {
+    font-size: 9px;
+  }
+
+  .sectionIntro h2 {
+    margin-top: 12px;
+
+    font-size: clamp(26px, 6.5vw, 34px);
+    line-height: 1.15;
+  }
+
+  .sectionIntro p {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .features {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 13px;
+  }
+
+  .featureCard {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .featureCard h3 {
+    margin-top: 16px;
+    font-size: 18px;
+  }
+
+  .featureCard p {
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+
+  /* CTA */
+
+  .ctaSection {
+    width: calc(100% - 28px);
+    padding-bottom: 45px;
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 22px;
+
+    padding: 26px 20px;
+    border-radius: 14px;
+  }
+
+  .cta h2 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .cta p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .ctaButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+    min-height: 46px;
+
+    padding: 12px;
+
+    font-size: 11px;
+  }
+
+
+  /* FOOTER */
+
+  .footer {
+    width: calc(100% - 28px);
+
+    flex-direction: column;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 20px 0 25px;
+
+    font-size: 10px;
+    text-align: center;
+  }
+}
+
+
+/* =====================================================
+   RESPONSIVE — PETITS MOBILES
+   420px et moins
+===================================================== */
+
+@media (max-width: 420px) {
+
+  .headerInner {
+    width: calc(100% - 16px);
+    gap: 5px;
+  }
+
+  .brand {
+    gap: 6px;
+  }
+
+  .logo {
+    flex-basis: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .brandName {
+    font-size: 11px;
+  }
+
+  .brandSubtitle {
+    font-size: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .headerLinks {
+    gap: 4px;
+  }
+
+  .headerLink {
+    gap: 4px;
+
+    min-height: 32px;
+    padding: 6px;
+
+    font-size: 9px;
+  }
+
+  .headerLinkArrow {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hero {
+    padding: 38px 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(27px, 7.3vw, 31px);
+  }
+
+  .heroCardBottom div {
+    padding: 12px 5px;
+  }
+
+  .heroCardBottom strong {
+    font-size: 15px;
+  }
+
+  .heroCardBottom span {
+    font-size: 7px;
+  }
+}
+
+
+/* =====================================================
+   RESPONSIVE — TRÈS PETITS MOBILES
+   360px et moins
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .brandSubtitle {
+    display: none;
+  }
+
+  .brandName {
+    font-size: 11px;
+  }
+
+  .headerInner {
+    gap: 4px;
+  }
+
+  .headerLink {
+    padding: 6px 5px;
+    font-size: 8px;
+  }
+
+  .headerLinkText {
+    font-size: 8px;
+  }
+
+  .hero h1 {
+    font-size: 27px;
+  }
+
+  .heroCardBottom {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .heroCardBottom div {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 18px;
+
+    border-right: 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .heroCardBottom div:last-child {
+    border-bottom: 0;
+  }
+}
+
+
+/* =====================================================
+   ACCESSIBILITÉ
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  :global(*),
+  :global(*::before),
+  :global(*::after) {
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
   }
 }
