@@ -28,7 +28,8 @@ export default function RelancesPage() {
   const [relances, setRelances] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [enCours, setEnCours] = useState(""); // ligne en cours de traitement
+  const [enCours, setEnCours] = useState(""); // action en cours de traitement
+  const [emailsEnvoyes, setEmailsEnvoyes] = useState([]); // lignes dont l'e-mail est parti
 
   useEffect(() => {
     try {
@@ -111,20 +112,39 @@ export default function RelancesPage() {
      ACTIONS SUR UNE RELANCE
   =================================================== */
 
+  // WhatsApp : ouvre le lien préparé par le script (message LAWRY déjà rédigé)
   function ouvrirWhatsApp(prospect) {
     if (!prospect.lienWhatsApp) return;
     window.open(prospect.lienWhatsApp, "_blank", "noopener,noreferrer");
   }
 
-  function ouvrirEmail(prospect) {
+  // E-mail : envoi direct via Gmail (message LAWRY défini dans le script)
+  async function envoyerEmail(prospect) {
     if (!prospect.email) return;
-    const sujet = encodeURIComponent("Cabinet LAWRY - Suivi de notre échange");
-    const corps = encodeURIComponent(
-      `Bonjour ${prospect.nom},\n\nNous revenons vers vous au sujet de : ${
-        prospect.service || "votre demande"
-      }.\n\nCordialement,\nCabinet LAWRY`
-    );
-    window.location.href = `mailto:${prospect.email}?subject=${sujet}&body=${corps}`;
+
+    setEnCours("mail-" + prospect.ligne);
+    setError("");
+
+    try {
+      const response = await fetch("/api/lawry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "envoyerEmailRelance",
+          data: { ligne: prospect.ligne },
+          pin,
+        }),
+      });
+
+      const json = await response.json();
+      if (!json.ok) throw new Error(json.error || "Échec de l'envoi de l'e-mail.");
+
+      setEmailsEnvoyes((current) => [...current, prospect.ligne]);
+    } catch (err) {
+      setError(err.message || "Une erreur est survenue.");
+    } finally {
+      setEnCours("");
+    }
   }
 
   async function marquerCommeRelance(prospect) {
@@ -245,7 +265,8 @@ export default function RelancesPage() {
           <h1>Relances à faire</h1>
           <p>
             Prospects dont la prochaine relance est due aujourd'hui ou en
-            retard. Cliquez sur WhatsApp ou E-mail pour l'envoyer, puis sur
+            retard. Cliquez sur WhatsApp pour ouvrir le message prêt à envoyer,
+            ou sur « Envoyer l'e-mail » pour l'envoyer directement, puis sur
             « Marquer comme relancé » pour programmer la relance suivante.
           </p>
 
@@ -318,11 +339,19 @@ export default function RelancesPage() {
                 <button
                   type="button"
                   className={styles.emailButton}
-                  onClick={() => ouvrirEmail(prospect)}
-                  disabled={!prospect.email}
+                  onClick={() => envoyerEmail(prospect)}
+                  disabled={
+                    !prospect.email ||
+                    enCours === "mail-" + prospect.ligne ||
+                    emailsEnvoyes.includes(prospect.ligne)
+                  }
                 >
                   <FiMail size={15} />
-                  E-mail
+                  {emailsEnvoyes.includes(prospect.ligne)
+                    ? "E-mail envoyé ✓"
+                    : enCours === "mail-" + prospect.ligne
+                    ? "Envoi…"
+                    : "Envoyer l'e-mail"}
                 </button>
 
                 <button
