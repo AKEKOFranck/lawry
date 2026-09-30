@@ -1,0 +1,316 @@
+.page {
+  min-height: 100vh;
+  background: #f7f7fb;
+  color: #1a1a2e;
+}
+
+.header {
+  background: #101828;
+  color: #fff;
+  padding: 16px 20px;
+}
+
+.headerInner,
+.main {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo {
+  font-size: 22px;
+}
+
+.brand strong {
+  display: block;
+  font-size: 15px;
+}
+
+.brand small {
+  color: #a0a8bd;
+  font-size: 12px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 14px;
+}
+
+.nav a {
+  color: #d5d8e3;
+  text-decoration: none;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #d5d8e3;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.main {
+  padding: 30px 20px 60px;
+}
+
+.hero {
+  margin-bottom: 24px;
+}
+
+.kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #7a5cff;
+}
+
+.hero h1 {
+  font-size: 26px;
+  margin: 8px 0 6px;
+}
+
+.hero p {
+  color: #555;
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+.refreshButton {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.refreshButton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.error {
+  background: #fdecec;
+  color: #b3261e;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 0;
+  color: #777;
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardItem {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.cardItemTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cardItemTop h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.entreprise {
+  color: #777;
+  font-size: 13px;
+  margin: 2px 0 0;
+}
+
+.badgeRetard {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #fdecec;
+  color: #b3261e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badgeToday {
+  background: #eaf7ee;
+  color: #1e7a3d;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.cardItemInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  color: #555;
+  font-size: 13px;
+  margin: 10px 0 14px;
+}
+
+.cardItemActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cardItemActions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cardItemActions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.whatsappButton {
+  background: #e7f8ef;
+  color: #1e8a4c;
+}
+
+.emailButton {
+  background: #eaf1fd;
+  color: #2358c4;
+}
+
+.doneButton {
+  background: #101828;
+  color: #fff;
+  margin-left: auto;
+}
+
+.footer {
+  margin-top: 40px;
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+}
+
+/* Écran d'accès (identique à /prospection) */
+
+.accessMain {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.accessCard {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 32px 28px;
+  max-width: 360px;
+  text-align: center;
+}
+
+.accessIcon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: #f1eeff;
+  color: #7a5cff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accessCard h1 {
+  font-size: 20px;
+  margin: 6px 0 6px;
+}
+
+.accessCard p {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.accessForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.accessForm label {
+  font-size: 12px;
+  color: #555;
+}
+
+.accessForm input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #101828;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
